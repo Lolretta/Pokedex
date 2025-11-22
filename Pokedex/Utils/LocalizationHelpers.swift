@@ -7,14 +7,12 @@
 
 import Foundation
 
-// Idioma de la app según el sistema
 enum AppLanguage {
     case spanish
     case english
 }
 
 func currentAppLanguage() -> AppLanguage {
-    // iOS 16 en adelante
     if #available(iOS 16.0, *) {
         if let code = Locale.current.language.languageCode?.identifier {
             if code.hasPrefix("es") {
@@ -24,12 +22,9 @@ func currentAppLanguage() -> AppLanguage {
             }
         }
     }
-    
-    // Si algo falla (o iOS mas antiguo), usamos ingles por defecto
     return .spanish
 }
 
-// Nombre de tipos en español e inglés
 let typeNamesES: [String: String] = [
     "fire": "Fuego",
     "water": "Agua",
@@ -72,7 +67,6 @@ let typeNamesEN: [String: String] = [
     "rock": "Rock"
 ]
 
-// Convierte el tipo de la API ("fire") a "Fuego" o "Fire"
 func localizedTypeName(from apiType: String, language: AppLanguage) -> String {
     switch language {
     case .spanish:
@@ -82,7 +76,6 @@ func localizedTypeName(from apiType: String, language: AppLanguage) -> String {
     }
 }
 
-// Nombre del Pokémon en español o inglés según species.names
 func localizedPokemonName(
     species: PokeAPIService.APIPokemonSpecies,
     apiPokemon: PokeAPIService.APIPokemon,
@@ -97,7 +90,6 @@ func localizedPokemonName(
     }
 }
 
-// Nombre de movimiento según idioma
 func localizedMoveName(
     from apiMove: PokeAPIService.APIMove,
     language: AppLanguage
@@ -110,7 +102,6 @@ func localizedMoveName(
     }
 }
 
-// Convierte el movimiento de la API a tu struct Movs
 func mapAPIMoveToMovs(_ apiMove: PokeAPIService.APIMove, language: AppLanguage) -> Movs {
     let moveTypeName = localizedTypeName(from: apiMove.type.name, language: language)
     
